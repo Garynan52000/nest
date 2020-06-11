@@ -4,6 +4,9 @@ import { AppService } from './app.service';
 import { AccountController } from './account/account.controller';
 import { CatsModule } from './cats/cats.module';
 import { LoggerMiddleware } from './common/middleware/logger.middleware';
+import { HttpExceptionFilter } from './common/filtter/http-exception.filter';
+import { APP_FILTER } from '@nestjs/core';
+import { BasicExceptionFilter } from './common/filtter/basic-exception.filter';
 
 @Module({
 	imports: [CatsModule],
@@ -12,7 +15,15 @@ import { LoggerMiddleware } from './common/middleware/logger.middleware';
 		AccountController
 	],
 	providers: [
-		AppService
+		AppService,
+		{
+			provide: APP_FILTER,
+			useClass: HttpExceptionFilter,
+		},
+		{
+			provide: APP_FILTER,
+			useClass: BasicExceptionFilter,
+		},
 	],
 })
 /* 
@@ -21,7 +32,7 @@ import { LoggerMiddleware } from './common/middleware/logger.middleware';
 */
 export class AppModule implements NestModule {
 
-	configure(consumer: MiddlewareConsumer) {
+	configure(consumer: MiddlewareConsumer): void {
 		consumer
 			/* 
 				可以使用多个参数来指定多个多个中间件。
@@ -34,7 +45,6 @@ export class AppModule implements NestModule {
 				.exclude( { path: 'account', method: RequestMethod.ALL }, ... )	
 			*/
 			.exclude(
-				{ path: 'account', method: RequestMethod.GET },
 				{ path: 'account', method: RequestMethod.POST },
 				'account/(.*)',
 			)
