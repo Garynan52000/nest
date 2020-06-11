@@ -4,7 +4,7 @@ import { Request } from 'express';
 import { HttpExceptionFilter } from './common/filtter/http-exception.filter';
 
 
-@Controller()
+@Controller('apis')
 /* 
 	控制器范围绑定过滤器
 */

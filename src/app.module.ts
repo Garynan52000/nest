@@ -1,12 +1,32 @@
 import { Module, NestModule, MiddlewareConsumer, RequestMethod } from '@nestjs/common';
-import { AppController } from './app.controller';
+import { APP_FILTER, APP_PIPE } from '@nestjs/core';
 import { AppService } from './app.service';
-import { AccountController } from './account/account.controller';
-import { CatsModule } from './cats/cats.module';
-import { LoggerMiddleware } from './common/middleware/logger.middleware';
 import { HttpExceptionFilter } from './common/filtter/http-exception.filter';
-import { APP_FILTER } from '@nestjs/core';
 import { BasicExceptionFilter } from './common/filtter/basic-exception.filter';
+import { LoggerMiddleware } from './common/middleware/logger.middleware';
+import { CatsModule } from './cats/cats.module';
+import { AppController } from './app.controller';
+import { AccountController } from './account/account.controller';
+import { MyValidationPipe } from './common/pipe/my-validation.pipe';
+
+const GLOBAL_SERVICES = [
+	AppService,
+	{
+		provide: APP_FILTER,
+		useClass: BasicExceptionFilter,
+	},
+	{
+		provide: APP_FILTER,
+		useClass: HttpExceptionFilter,
+	}
+];
+
+const GLOBAL_PIPES = [
+	{
+		provide: APP_PIPE,
+		useClass: MyValidationPipe
+	}
+];
 
 @Module({
 	imports: [CatsModule],
@@ -15,15 +35,8 @@ import { BasicExceptionFilter } from './common/filtter/basic-exception.filter';
 		AccountController
 	],
 	providers: [
-		AppService,
-		{
-			provide: APP_FILTER,
-			useClass: HttpExceptionFilter,
-		},
-		{
-			provide: APP_FILTER,
-			useClass: BasicExceptionFilter,
-		},
+		...GLOBAL_SERVICES,
+		...GLOBAL_PIPES
 	],
 })
 /* 

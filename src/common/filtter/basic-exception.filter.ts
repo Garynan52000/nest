@@ -15,15 +15,26 @@ export class BasicExceptionFilter implements ExceptionFilter {
 		const statusCode = HttpStatus.INTERNAL_SERVER_ERROR;
 		const message = exception && exception['message'] ? 
 			exception['message'] : MESSAGES.UNKNOWN_EXCEPTION_MESSAGE;
-		const path = request.baseUrl;
+		const path = request.originalUrl;
 		const timestamp = Date.now().valueOf();
-		
+		const defaultJsonData = {
+			statusCode,
+			message,
+			path,
+			timestamp,
+		};
+
+		let jsonData;
+		try {
+			jsonData = exception['getResponse']();
+			jsonData = Object.assign(defaultJsonData, jsonData);
+		} catch {
+			jsonData = defaultJsonData;
+		}
+
+
 		response
-			.json({
-				statusCode,
-				message,
-				path,
-				timestamp
-			});
+			.status(statusCode)
+			.json(jsonData);
 	}
 }

@@ -3,7 +3,7 @@ import { Observable, of } from 'rxjs';
 import { CreateCatDto } from './dto/create-cat.dto';
 import { CatsService } from './cats.service';
 
-@Controller('cats')
+@Controller('apis/cats')
 export class CatsController {
 
     constructor(

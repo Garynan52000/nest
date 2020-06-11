@@ -9,19 +9,30 @@ import { Request, Response } from 'express';
 export class HttpExceptionFilter implements ExceptionFilter {
 	catch(exception: HttpException, host: ArgumentsHost): void {
 		const ctx = host.switchToHttp();
-		const response = ctx.getResponse<Response>();
 		const request = ctx.getRequest<Request>();
-		const status = exception.getStatus();
+		const response = ctx.getResponse<Response>();
+		const statusCode = exception.getStatus();
 		const message = exception.message;
+		const path = request.originalUrl;
+		const timestamp = Date.now().valueOf();
+		const defaultJsonData = {
+			statusCode,
+			message,
+			path,
+			timestamp,
+		};
+
+		let jsonData;
+		try {
+			jsonData = exception['getResponse']();
+			jsonData = Object.assign(defaultJsonData, jsonData);
+		} catch {
+			jsonData = defaultJsonData;
+		}
 
 		response
-			.status(status)
-			.json({
-				statusCode: status,
-				message,
-				path: request.baseUrl,
-				timestamp: new Date().valueOf(),
-			});
+			.status(statusCode)
+			.json(jsonData);
 	}
 }
 
