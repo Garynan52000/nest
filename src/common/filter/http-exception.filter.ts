@@ -14,7 +14,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
 		const statusCode = exception.getStatus();
 		const message = exception.message;
 		const path = request.originalUrl;
-		const timestamp = Date.now().valueOf();
+		const timestamp = Date.now();
 		const defaultJsonData = {
 			statusCode,
 			message,
@@ -25,7 +25,11 @@ export class HttpExceptionFilter implements ExceptionFilter {
 		let jsonData;
 		try {
 			jsonData = exception['getResponse']();
-			jsonData = Object.assign(defaultJsonData, jsonData);
+			if (Object.prototype.toString.call(jsonData) === '[object Object]') {
+				jsonData = Object.assign(defaultJsonData, jsonData);
+			} else {
+				jsonData = defaultJsonData;
+			}
 		} catch {
 			jsonData = defaultJsonData;
 		}

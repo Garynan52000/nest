@@ -16,7 +16,7 @@ export class BasicExceptionFilter implements ExceptionFilter {
 		const message = exception && exception['message'] ? 
 			exception['message'] : MESSAGES.UNKNOWN_EXCEPTION_MESSAGE;
 		const path = request.originalUrl;
-		const timestamp = Date.now().valueOf();
+		const timestamp = Date.now();
 		const defaultJsonData = {
 			statusCode,
 			message,
@@ -27,7 +27,11 @@ export class BasicExceptionFilter implements ExceptionFilter {
 		let jsonData;
 		try {
 			jsonData = exception['getResponse']();
-			jsonData = Object.assign(defaultJsonData, jsonData);
+			if (Object.prototype.toString.call(jsonData) === '[object Object]') {
+				jsonData = Object.assign(defaultJsonData, jsonData);
+			} else {
+				jsonData = defaultJsonData;
+			}
 		} catch {
 			jsonData = defaultJsonData;
 		}

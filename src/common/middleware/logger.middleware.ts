@@ -3,10 +3,20 @@ import { Request, Response } from 'express';
 
 @Injectable()
 export class LoggerMiddleware implements NestMiddleware {
-	use(req: Request, res: Response, next: () => void) {
-		console.log('Request...');
+
+	use(req: Request, res: Response, next: () => void): void {
+		const { method, originalUrl, ip } = req;
+		console.log('\n');
+		console.log(new Date().toString());
+		console.log(
+			'Request: %s %s [IP: %s]', 
+			method, 
+			originalUrl,
+			ip
+		);
 		next();
 	}
+	
 }
 
 /*

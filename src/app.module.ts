@@ -1,42 +1,25 @@
 import { Module, NestModule, MiddlewareConsumer, RequestMethod } from '@nestjs/common';
-import { APP_FILTER, APP_PIPE } from '@nestjs/core';
-import { AppService } from './app.service';
-import { HttpExceptionFilter } from './common/filtter/http-exception.filter';
-import { BasicExceptionFilter } from './common/filtter/basic-exception.filter';
-import { LoggerMiddleware } from './common/middleware/logger.middleware';
+import { CommonModule, LoggerMiddleware } from './common';
 import { CatsModule } from './cats/cats.module';
 import { AppController } from './app.controller';
-import { AccountController } from './account/account.controller';
-import { MyValidationPipe } from './common/pipe/my-validation.pipe';
-
-const GLOBAL_SERVICES = [
-	AppService,
-	{
-		provide: APP_FILTER,
-		useClass: BasicExceptionFilter,
-	},
-	{
-		provide: APP_FILTER,
-		useClass: HttpExceptionFilter,
-	}
-];
-
-const GLOBAL_PIPES = [
-	{
-		provide: APP_PIPE,
-		useClass: MyValidationPipe
-	}
-];
+import { AppService } from './app.service';
+import { AccountModule } from './account/account.module';
+import { RedirectModule } from './redirect/redirect.module';
+import { ExceptionModule } from './exception/exception.module';
 
 @Module({
-	imports: [CatsModule],
+	imports: [
+		CommonModule,
+		AccountModule,
+		CatsModule,
+		RedirectModule,
+		ExceptionModule
+	],
 	controllers: [
 		AppController,
-		AccountController
 	],
 	providers: [
-		...GLOBAL_SERVICES,
-		...GLOBAL_PIPES
+		AppService
 	],
 })
 /* 
@@ -58,8 +41,8 @@ export class AppModule implements NestModule {
 				.exclude( { path: 'account', method: RequestMethod.ALL }, ... )	
 			*/
 			.exclude(
-				{ path: 'account', method: RequestMethod.POST },
-				'account/(.*)',
+				{ path: 'apis/account', method: RequestMethod.POST },
+				'apis/account/(.+)',
 			)
 			/* 
 				可接受一个字符串、多个字符串、对象、一个控制器类甚至多个控制器类。
@@ -69,7 +52,7 @@ export class AppModule implements NestModule {
 				在大多数情况下，您可能只会传递一个由逗号分隔的控制器列表。
 				.forRoutes( Controller, ... )
 			*/
-			.forRoutes(AccountController)
+			.forRoutes('apis')
 	}
 
 }
