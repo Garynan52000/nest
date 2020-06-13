@@ -7,7 +7,6 @@ export class LoggerMiddleware implements NestMiddleware {
 	use(req: Request, res: Response, next: () => void): void {
 		const { method, originalUrl, ip } = req;
 		console.log('\n');
-		console.log(new Date().toString());
 		console.log(
 			'Request: %s %s [IP: %s]', 
 			method, 

@@ -7,6 +7,7 @@ import { AppService } from './app.service';
 import { AccountModule } from './account/account.module';
 import { RedirectModule } from './redirect/redirect.module';
 import { ExceptionModule } from './exception/exception.module';
+import { InterceptorModule } from './interceptor/interceptor.module';
 
 @Module({
 	imports: [
@@ -15,7 +16,8 @@ import { ExceptionModule } from './exception/exception.module';
 		AccountModule,
 		CatsModule,
 		RedirectModule,
-		ExceptionModule
+		ExceptionModule,
+		InterceptorModule
 	],
 	controllers: [
 		AppController,
