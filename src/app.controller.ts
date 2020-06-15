@@ -1,16 +1,21 @@
-import { Controller, Get, Req } from '@nestjs/common';
+import { Controller, Get, Inject } from '@nestjs/common';
 import { AppService } from './app.service';
-import { Request } from 'express';
 import { IgnoreAuth } from './guard/auth.guard';
+import { User, UserEntity } from './decorator/user';
 
 @Controller('apis')
 export class AppController {
-	constructor(private readonly appService: AppService) { }
+
+	@Inject()
+	private readonly appService: AppService
+
+	constructor() { }
 
 	@Get()
 	@IgnoreAuth()
-	getHello(@Req() request: Request): string {
-		return this.appService.getHello();
+	main(@User() user: UserEntity): UserEntity {
+		console.log(this.appService.getHello());
+		return user;
 	}
 	
 }
