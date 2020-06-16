@@ -1,16 +1,16 @@
 import { Injectable } from '@nestjs/common';
-import { Cat } from './interface/cat.interface';
+import { CreateEntity } from './entity/cat.entity';
 
 @Injectable()
 export class CatsService {
 
-    private readonly cats: Cat[] = [];
+    private readonly cats: CreateEntity[] = [];
 
-    create(cat: Cat): void {
+    create(cat: CreateEntity): void {
         this.cats.push(cat);
     }
 
-    findAll(): Cat[] {
+    findAll(): CreateEntity[] {
         return this.cats;
     }
     

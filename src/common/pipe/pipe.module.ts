@@ -14,4 +14,4 @@ export const COMMON_PIPES = [
 @Module({
     providers: COMMON_PIPES
 })
-export class PipeModule {};
+export class CommonPipeModule {};

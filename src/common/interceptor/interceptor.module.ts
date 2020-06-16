@@ -28,4 +28,4 @@ export const COMMON_INTERCEPTORES = [
 @Module({
     providers: COMMON_INTERCEPTORES
 })
-export class InterceptorModule {}
+export class CommonInterceptorModule {}

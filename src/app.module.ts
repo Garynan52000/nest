@@ -8,6 +8,7 @@ import { AccountModule } from './account/account.module';
 import { RedirectModule } from './redirect/redirect.module';
 import { ExceptionModule } from './exception/exception.module';
 import { InterceptorModule } from './interceptor/interceptor.module';
+import { ProviderModule } from './provider/provider.module';
 
 @Module({
 	imports: [
@@ -17,14 +18,15 @@ import { InterceptorModule } from './interceptor/interceptor.module';
 		CatsModule,
 		RedirectModule,
 		ExceptionModule,
-		InterceptorModule
+		InterceptorModule,
+		ProviderModule
 	],
 	controllers: [
 		AppController,
 	],
 	providers: [
 		AppService
-	],
+	]
 })
 /* 
 	中间件不能在 @Module() 装饰器中列出。我们必须使用模块类的 configure() 方法来设置它们。

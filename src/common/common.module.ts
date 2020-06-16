@@ -1,15 +1,15 @@
 import { Module } from "@nestjs/common";
-import { PipeModule } from "./pipe";
-import { InterceptorModule } from './interceptor/interceptor.module';
-import { FilterModule } from "./filter/filter.module";
-import { ServiceModule } from "./service";
+import { CommonPipeModule } from "./pipe";
+import { CommonInterceptorModule } from './interceptor';
+import { CommonFilterModule } from "./filter";
+import { CommonProviderModule } from "./provider";
 
 @Module({
     imports: [
-        PipeModule,
-        InterceptorModule,
-        FilterModule,
-        ServiceModule
+        CommonPipeModule,
+        CommonInterceptorModule,
+        CommonFilterModule,
+        CommonProviderModule
     ]
 })
 export class CommonModule {}

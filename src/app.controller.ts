@@ -7,7 +7,7 @@ import { User, UserEntity } from './decorator/user';
 export class AppController {
 
 	@Inject()
-	private readonly appService: AppService
+	private readonly appService: AppService;
 
 	constructor() { }
 

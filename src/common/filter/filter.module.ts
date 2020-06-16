@@ -21,4 +21,4 @@ export const COMMON_FILTERS = [
 @Module({
     providers: COMMON_FILTERS
 })
-export class FilterModule {}
+export class CommonFilterModule {}
