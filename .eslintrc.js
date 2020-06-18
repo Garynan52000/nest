@@ -18,8 +18,8 @@ module.exports = {
   },
   rules: {
     '@typescript-eslint/interface-name-prefix': 'off',
-    '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
-    '@typescript-eslint/no-empty-function': ["error", { "allow": ["constructors"] }],
+    '@typescript-eslint/no-empty-function': ["warn", { "allow": ["constructors"] }],
+    '@typescript-eslint/explicit-function-return-type': 'off'
   },
 };

@@ -1,11 +1,11 @@
 import { Controller, Get, Query, ParseIntPipe, All } from '@nestjs/common';
-import { IgnoreAuth } from 'src/guard/auth.guard';
+import { IgnoreJWT } from 'src/auth/decorator/ignore-jwt-auth.decorator';
 
 @Controller('apis/interceptor')
 export class InterceptorController {
 
     @Get('timeout')
-    @IgnoreAuth()
+    @IgnoreJWT()
     async timeout(
         @Query('ms', ParseIntPipe) ms: number
     ): Promise<void> {
@@ -16,7 +16,7 @@ export class InterceptorController {
     }
 
     @All('exclude-null')
-    @IgnoreAuth()
+    @IgnoreJWT()
     excludeNull(): any {
         return null;
     }

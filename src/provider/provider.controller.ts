@@ -1,8 +1,8 @@
 import { Controller, Inject, Get, Put, Body } from '@nestjs/common';
 import { SetDefaultServiceValueDto } from './dto';
 import { DefaultService, USE_VALUE, USE_FACTORY, IUseFactory } from 'src/common';
-import { IgnoreAuth } from 'src/guard/auth.guard';
 import { ASYNC } from 'src/common/provider/async/async';
+import { IgnoreJWT } from 'src/auth/decorator/ignore-jwt-auth.decorator';
 
 @Controller('apis/provider')
 export class ProviderController {
@@ -23,13 +23,13 @@ export class ProviderController {
     private readonly asyncMsg: string;
 
     @Get('default-service')
-    @IgnoreAuth()
+    @IgnoreJWT()
     getDefaultServiceValue(): number {
         return this.defaultService.value;
     }
 
     @Put('default-service')
-    @IgnoreAuth()
+    @IgnoreJWT()
     setDefaultServiceValue(
         @Body() body: SetDefaultServiceValueDto
     ): void {
@@ -37,25 +37,25 @@ export class ProviderController {
     }
 
     @Get('use-value')
-    @IgnoreAuth()
+    @IgnoreJWT()
     getUseValue(): string {
         return this.useValue;
     }
 
     @Get('use-factory')
-    @IgnoreAuth()
+    @IgnoreJWT()
     getUseFactory(): IUseFactory {
         return this.useFactory;
     }
 
     @Get('use-value-alias')
-    @IgnoreAuth()
+    @IgnoreJWT()
     getUseValueAlias(): string {
         return this.useValueAlias;
     }
 
     @Get('async')
-    @IgnoreAuth()
+    @IgnoreJWT()
     doAsync(): string {
         return this.asyncMsg;
     }

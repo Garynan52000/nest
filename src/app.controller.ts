@@ -1,7 +1,8 @@
 import { Controller, Get, Inject } from '@nestjs/common';
 import { AppService } from './app.service';
 import { IgnoreAuth } from './guard/auth.guard';
-import { User, UserEntity } from './decorator/user';
+import { User } from './auth/decorator/user.decorator';
+import { UserEntity } from './users/entity/user.entity';
 
 @Controller('apis')
 export class AppController {

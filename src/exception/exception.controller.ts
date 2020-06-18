@@ -1,4 +1,5 @@
 import { Controller, All, HttpException, HttpStatus, ForbiddenException } from '@nestjs/common';
+import { IgnoreJWT } from 'src/auth/decorator/ignore-jwt-auth.decorator';
 
 @Controller('apis/exception')
 /* 
@@ -7,7 +8,8 @@ import { Controller, All, HttpException, HttpStatus, ForbiddenException } from '
 // @UseFilters(new HttpExceptionFilter())
 export class ExceptionController {
 
-    @All('buildin')
+	@All('buildin')
+	@IgnoreJWT()
 	httpException(): void {
 		/* 
 			内置的异常层负责处理整个应用程序中的所有抛出的异常。当捕获到未处理的异常时，最终用户将收到友好的响应。
@@ -39,11 +41,13 @@ export class ExceptionController {
 		尽可能使用类而不是实例。由于 Nest 可以轻松地在整个模块中重复使用同一类的实例，因此可以减少内存使用。
 	*/
 	// @UseFilters(HttpExceptionFilter)
+	@IgnoreJWT()
 	httpExceptionFilter(): void {
 		throw new ForbiddenException();
 	}
 
 	@All('runtime')
+	@IgnoreJWT()
 	runtimeException(): void {
 		let a;
 		a.do();

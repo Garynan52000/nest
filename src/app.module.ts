@@ -1,5 +1,7 @@
 import { Module, NestModule, MiddlewareConsumer, RequestMethod } from '@nestjs/common';
 import { CommonModule, LoggerMiddleware } from './common';
+import { AuthModule } from './auth/auth.module';
+import { UsersModule } from './users/users.module';
 import { GuardModule } from './guard/guard.module';
 import { CatsModule } from './cats/cats.module';
 import { AppController } from './app.controller';
@@ -13,13 +15,15 @@ import { ProviderModule } from './provider/provider.module';
 @Module({
 	imports: [
 		CommonModule,
+		AuthModule,
+		UsersModule,
 		GuardModule,
 		AccountModule,
 		CatsModule,
 		RedirectModule,
 		ExceptionModule,
 		InterceptorModule,
-		ProviderModule
+		ProviderModule,
 	],
 	controllers: [
 		AppController,
