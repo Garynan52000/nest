@@ -1,31 +1,19 @@
-import { IsString, IsInt } from "class-validator";
+import { Entity, Column, PrimaryGeneratedColumn, Generated } from 'typeorm';
 
+@Entity()
 export class UserEntity {
 
-    @IsInt()
-    id: number;
+    @PrimaryGeneratedColumn()
+    id?: number;
+    
+    @Generated('uuid') 
+    @Column()
+    uuid?: string;
 
-    @IsString()
-    uid: string;
+    @Column()
+    username?: string;
 
-    @IsString()
-    username: string;
-
-    @IsString()
+    @Column()
     password?: string;
-
-    @IsString()
-    nickname: string;
-
-    constructor(user: UserEntity) {
-        const {
-            id, uid, username, password, nickname
-        } = user;
-        this.id = id;
-        this.uid = uid;
-        this.username = username;
-        this.password = password;
-        this.nickname = nickname;
-    }
     
 }

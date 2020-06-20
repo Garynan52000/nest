@@ -1,14 +1,26 @@
+import { Entity, PrimaryGeneratedColumn, Column  } from 'typeorm';
 import { IsString, IsInt } from "class-validator";
 
-export class CreateEntity {
-
-    @IsString()
-    readonly name: string;
+@Entity()
+export class CatEntity {
 
     @IsInt()
-    readonly age: number;
-
+    @PrimaryGeneratedColumn()
+    id: number;
+    
     @IsString()
-    readonly breed: string;
+    @Column()
+    name: string;
+
+    @IsInt()
+    @Column()
+    age: number;
+
+    /**
+     * 品种
+     */
+    @IsString()
+    @Column()
+    breed: string;
     
 }

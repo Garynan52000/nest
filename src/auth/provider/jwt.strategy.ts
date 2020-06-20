@@ -19,8 +19,11 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
         });
     }
 
-    async validate(payload: {sub: string, username: string}): Promise<UserEntity> {
-        const user = await this.userService.findOne(payload.sub || payload.username);
+    async validate(payload: {sub: number, username: string}): Promise<UserEntity> {
+        const user = await this.userService.findOne({
+            id: payload.sub,
+            username: payload.username
+        });
         if (user) {
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
             const { password, ...result } = user;

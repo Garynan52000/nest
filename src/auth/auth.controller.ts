@@ -1,9 +1,9 @@
-import { Controller, Post, UseGuards, Req, Inject } from '@nestjs/common';
+import { Controller, Post, UseGuards, Inject, Body } from '@nestjs/common';
 import { UserEntity } from 'src/users/entity/user.entity';
-import { Request } from 'express';
 import { LocalAuthGuard } from './guard/local-auth.guard';
 import { AuthService } from './auth.service';
 import { IgnoreJWT } from './decorator/ignore-jwt-auth.decorator';
+import { User } from './decorator/user.decorator';
 
 @Controller('apis/auth')
 export class AuthController {
@@ -12,10 +12,10 @@ export class AuthController {
     private readonly authService: AuthService; 
 
     @Post('login')
-    @IgnoreJWT()
     @UseGuards(LocalAuthGuard)
-    async login(@Req() req: Request): Promise<UserEntity> {
-        return this.authService.login(req.user as UserEntity);
+    @IgnoreJWT()
+    async login(@User() body: UserEntity): Promise<UserEntity> {
+        return this.authService.login(body);
     }
     
 }

@@ -1,7 +1,7 @@
 import { Controller, Get, Req, Post, HttpCode, Header, Param, Body, HttpStatus } from '@nestjs/common';
 import { Observable, of } from 'rxjs';
 import { CatsService } from './cats.service';
-import { CreateEntity } from './entity/cat.entity';
+import { CatEntity } from './entity/cat.entity';
 
 @Controller('apis/cats')
 export class CatsController {
@@ -13,7 +13,7 @@ export class CatsController {
     @Post()
     @HttpCode(HttpStatus.CREATED) // 默认情况下，响应的状态码总是200，除了 POST 请求外，此时它是201，我们可以通过在处理程序层添加@HttpCode（...） 装饰器来轻松更改此行为。
     @Header('Cache-Control', 'none') // 要指定自定义响应头，可以使用 @header() 修饰器或类库特有的响应对象,（使用 并 res.header()直接调用）。
-    create(@Body() createCatDto: CreateEntity): void {
+    create(@Body() createCatDto: CatEntity): void {
         this.catsService.create(createCatDto);
     }
     // create(@Res() res: Response) {

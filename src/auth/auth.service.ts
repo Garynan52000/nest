@@ -13,7 +13,10 @@ export class AuthService {
     private readonly jwtService: JwtService
 
     async validateUser(inputUsername: string, inputPassword: string): Promise<UserEntity | null> {
-        const user = await this.usersService.findOne(inputUsername);
+        const user = await this.usersService.findOne({
+            username: inputUsername,
+            password: inputPassword
+        });
         if (user) {
             const {
                 password, ...result
@@ -24,7 +27,7 @@ export class AuthService {
     }
 
     async login(user: UserEntity): Promise<any> {
-        const payload = { username: user.username, sub: user.uid };
+        const payload = { username: user.username, sub: user.id };
         return {
             access_token: this.jwtService.sign(payload),
         };

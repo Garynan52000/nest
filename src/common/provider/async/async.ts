@@ -4,7 +4,7 @@ const provide = Symbol('ASYNC');
 
 const useFactory = async () => {
     await new Promise((resolve) => {
-        let loadtime = 5000;
+        let loadtime = 3000;
         function load() {
             console.log('asyncProvider will ready in %ds!', loadtime / 1000); 
             loadtime -= 1000

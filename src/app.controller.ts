@@ -1,8 +1,8 @@
 import { Controller, Get, Inject } from '@nestjs/common';
 import { AppService } from './app.service';
-import { IgnoreAuth } from './guard/auth.guard';
 import { User } from './auth/decorator/user.decorator';
 import { UserEntity } from './users/entity/user.entity';
+import { IgnoreJWT } from './auth/decorator/ignore-jwt-auth.decorator';
 
 @Controller('apis')
 export class AppController {
@@ -13,7 +13,7 @@ export class AppController {
 	constructor() { }
 
 	@Get()
-	@IgnoreAuth()
+	@IgnoreJWT()
 	main(@User() user: UserEntity): UserEntity {
 		console.log(this.appService.getHello());
 		return user;
