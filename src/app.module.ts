@@ -12,19 +12,11 @@ import { ExceptionModule } from './exception/exception.module';
 import { InterceptorModule } from './interceptor/interceptor.module';
 import { ProviderModule } from './provider/provider.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { EntityRepositoryModule } from './entity-repository/entity-repository.module';
 
 @Module({
 	imports: [
 		CommonModule,
-		AuthModule,
-		UsersModule,
-		GuardModule,
-		AccountModule,
-		CatsModule,
-		RedirectModule,
-		ExceptionModule,
-		InterceptorModule,
-		ProviderModule,
 		TypeOrmModule.forRoot({
 			type: 'mysql',
 			host: 'localhost',
@@ -45,6 +37,16 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 				@link https://typeorm.io/#/connection-options
 			*/
 		}),
+		AuthModule,
+		UsersModule,
+		GuardModule,
+		AccountModule,
+		CatsModule,
+		RedirectModule,
+		ExceptionModule,
+		InterceptorModule,
+		ProviderModule,
+		EntityRepositoryModule,
 	],
 	controllers: [
 		AppController,
