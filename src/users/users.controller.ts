@@ -15,8 +15,11 @@ export class UsersController {
     @Post()
     @HttpCode(HttpStatus.CREATED)
     @IgnoreJWT()
-    async create(@Body() user: UserEntity): Promise<UserEntity> {
-        return this.userService.create(user);
+    async create(@Body() body: UserEntity | UserEntity[]): Promise<UserEntity | UserEntity[]> {
+        const result = body instanceof Array ? 
+            await this.userService.createMany(body) :
+            await this.userService.create(body);
+        return result;
     }
 
     @Get()
