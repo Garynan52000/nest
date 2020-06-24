@@ -32,9 +32,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 			username: 'root',
 			password: 'xx123456',
 			database: 'test',
-			entities: [
-				'dist/**/*.entity{.ts,.js}'
-			],
+			/* 通过配置这一选项，每个通过forFeature()注册的实体都会自动添加到配置对象的entities数组中。 */
+			autoLoadEntities: true,
 			synchronize: true
 			/*  
 				其他一些额外的配置参数描述如下：
