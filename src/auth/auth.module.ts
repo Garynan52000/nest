@@ -19,7 +19,7 @@ import { APP_GUARD } from '@nestjs/core';
 		}),
 		JwtModule.register({
 			secret: JWT_CONSTANTS.secret,
-			signOptions: { expiresIn: '60s' },
+			signOptions: { expiresIn: '1h' },
 		}),
 		UsersModule,
 	],

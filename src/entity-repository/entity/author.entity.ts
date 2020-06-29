@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, EntityRepository, Repository } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, Repository, EntityRepository } from "typeorm";
 
 @Entity()
 export class AuthorEntity {

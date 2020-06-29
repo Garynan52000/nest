@@ -1,28 +1,28 @@
-import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
+import { Injectable, Inject } from '@nestjs/common';
 import { AuthorRepository, AuthorEntity } from './entity/author.entity';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class EntityRepositoryService {
 
-    @InjectRepository(AuthorEntity)
-    private readonly authorRepisitory :AuthorRepository
-
+    @Inject()
+    private readonly authorRepository: AuthorRepository
+    
     constructor() { }
 
     async create(author: AuthorEntity): Promise<AuthorEntity> {
-        const _author = this.authorRepisitory.create();
+        const _author = this.authorRepository.create();
         _author.name = author.name;
-        return this.authorRepisitory.save(author);
+        return this.authorRepository.save(author);
     }
 
     async createMany(authors: AuthorEntity[]): Promise<AuthorEntity[]> {
         const result: AuthorEntity[] = [];
-        await this.authorRepisitory.manager.transaction(async () => {
+        await this.authorRepository.manager.transaction(async () => {
             for (const author of authors) {
-                let _author = this.authorRepisitory.create();
+                let _author = this.authorRepository.create();
                 _author.name = author.name;
-                _author = await this.authorRepisitory.save(_author);
+                _author = await this.authorRepository.save(_author);
                 result.push(_author);
             }
         });
@@ -30,11 +30,11 @@ export class EntityRepositoryService {
     }
 
     async findOne(author: AuthorEntity): Promise<AuthorEntity> {
-        return this.authorRepisitory.findOne(author);
+        return this.authorRepository.findOne(author);
     }
 
     async findAll(author?: AuthorEntity): Promise<AuthorEntity[]> {
-        return this.authorRepisitory.find(author);
+        return this.authorRepository.find(author);
     }
     
 }
